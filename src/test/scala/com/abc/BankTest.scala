@@ -33,10 +33,10 @@ class BankTest extends FlatSpec with Matchers {
     val checkingAccount: Account = new Account(Account.MAXI_SAVINGS)
     bank.addCustomer(new Customer("Bill").openAccount(checkingAccount))
     checkingAccount.deposit(3000.0)
-    bank.totalInterestPaid should be(170.0)
+    bank.totalInterestPaid should be(150)
   }
 
-  it should "be able to check the total interest paid on multiple different opend accounts" in {
+  it should "be able to check the total interest paid on multiple different opened accounts" in {
     val bank: Bank = new Bank
     val maxiSavingsAccount: Account = new Account(Account.MAXI_SAVINGS)
     val checkingAccount: Account = new Account(Account.CHECKING)
@@ -46,7 +46,7 @@ class BankTest extends FlatSpec with Matchers {
     bank.addCustomer(customerBill)
     checkingAccount.deposit(100.0)
     maxiSavingsAccount.deposit(3000.0)
-    bank.totalInterestPaid should be(170.1)
+    bank.totalInterestPaid should be(150.1)
   }
 
 }
