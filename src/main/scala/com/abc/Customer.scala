@@ -2,7 +2,19 @@ package com.abc
 
 import scala.collection.mutable.ListBuffer
 
-class Customer(val name: String, var accounts: ListBuffer[Account] = ListBuffer()) {
+class Customer(val name: String, val accounts: ListBuffer[Account] = ListBuffer()) {
+
+
+  def transferBetweenAccounts(fromAccount: Account, toAccount: Account, transferAmount: Double): Unit = {
+    try{
+    fromAccount.withdraw(transferAmount)
+    toAccount.deposit(transferAmount)
+    } catch {
+      case error: IllegalArgumentException => println(s"Cold not complete transaction. ${error.getMessage}")
+      case _ => println("System issue. Please try again later")
+    }
+  }
+
 
   def openAccount(account: Account): Customer = {
     accounts += account
