@@ -1,9 +1,14 @@
 package com.abc
 
+import java.util.concurrent.{TimeUnit, Executors}
+
 import scala.collection.mutable.ListBuffer
 
 class Bank {
-  var customers = new ListBuffer[Customer]
+
+  val scheduledPool = Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(payOutInterestDaily, 0, 1, TimeUnit.DAYS)
+
+  val customers = new ListBuffer[Customer]
 
   def addCustomer(customer: Customer) {
     customers += customer
@@ -23,18 +28,19 @@ class Bank {
   def totalInterestPaid: Double = {
     var total: Double = 0
     for (c <- customers) total += c.totalInterestEarned
-    return total
+    total
   }
 
-  def getFirstCustomer: String = {
-    try {
-      customers = null
-      customers(0).name
-    }
-    catch {
-      case e: Exception => {
-        e.printStackTrace
-        return "Error"
+  def payOutInterestDaily = new Runnable {
+    override def run(): Unit = {
+//     println("interest Accrued")
+      customers.foreach {
+        customer =>
+          customer.accounts.foreach {
+            account =>
+              val interest = account.dailyInterestEarned
+              account.deposit(Transaction.INTEREST, interest)
+          }
       }
     }
   }

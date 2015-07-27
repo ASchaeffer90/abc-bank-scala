@@ -8,7 +8,7 @@ class Customer(val name: String, val accounts: ListBuffer[Account] = ListBuffer(
   def transferBetweenAccounts(fromAccount: Account, toAccount: Account, transferAmount: Double): Unit = {
     try{
     fromAccount.withdraw(transferAmount)
-    toAccount.deposit(transferAmount)
+    toAccount.deposit(Transaction.DEPOSIT, transferAmount)
     } catch {
       case error: IllegalArgumentException => println(s"Cold not complete transaction. ${error.getMessage}")
       case _ => println("System issue. Please try again later")
@@ -23,7 +23,7 @@ class Customer(val name: String, val accounts: ListBuffer[Account] = ListBuffer(
 
   def numberOfAccounts: Int = accounts.size
 
-  def totalInterestEarned: Double = accounts.map(_.interestEarned).sum
+  def totalInterestEarned: Double = accounts.map(_.sumOfInterest).sum
 
   /**
    * This method gets a statement

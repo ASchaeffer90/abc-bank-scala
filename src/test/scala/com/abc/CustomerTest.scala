@@ -7,8 +7,8 @@ class CustomerTest extends FlatSpec with Matchers {
     val checkingAccount: Account = new Account(Account.CHECKING)
     val savingsAccount: Account = new Account(Account.SAVINGS)
     val henry: Customer = new Customer("Henry").openAccount(checkingAccount).openAccount(savingsAccount)
-    checkingAccount.deposit(100.0)
-    savingsAccount.deposit(4000.0)
+    checkingAccount.deposit(Transaction.DEPOSIT, 100.0)
+    savingsAccount.deposit(Transaction.DEPOSIT, 4000.0)
     savingsAccount.withdraw(200.0)
     henry.getStatement should be("Statement for Henry\n" +
       "\nChecking Account\n  deposit $100.00\nTotal $100.00\n" +
@@ -37,7 +37,7 @@ class CustomerTest extends FlatSpec with Matchers {
   it should "be able to transfer money between accounts" in {
     val oscar: Customer = new Customer("Oscar")
     val checkingAccount: Account = new Account(Account.CHECKING)
-    checkingAccount.deposit(1000.0)
+    checkingAccount.deposit(Transaction.DEPOSIT, 1000.0)
     val savingsAccount: Account = new Account(Account.SAVINGS)
     oscar.openAccount(checkingAccount)
     oscar.openAccount(savingsAccount)
