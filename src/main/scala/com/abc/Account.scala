@@ -14,6 +14,7 @@ object Account {
 case class Account(identifier: Long, accountType: Int, transactions: ListBuffer[Transaction] = ListBuffer()) {
 
   //"DateProvider.getInstance.now.getTime" will make sure the account id is unique
+  //TODO: Allow user to have multiple of the same type of account
   def this(accountType: Int) = this(DateProvider.getInstance.now.getTime, accountType)
 
   def deposit(reason: Int, amount: Double) {

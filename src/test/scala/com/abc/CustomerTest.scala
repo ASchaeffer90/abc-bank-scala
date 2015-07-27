@@ -3,7 +3,7 @@ package com.abc
 import org.scalatest.{Matchers, FlatSpec}
 
 class CustomerTest extends FlatSpec with Matchers {
-  "Customer" should "statement" in {
+  "Customer" should " be able to get a statement of there accounts" in {
     val checkingAccount: Account = new Account(Account.CHECKING)
     val savingsAccount: Account = new Account(Account.SAVINGS)
     val henry: Customer = new Customer("Henry").openAccount(checkingAccount).openAccount(savingsAccount)
